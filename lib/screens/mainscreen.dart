@@ -14,7 +14,7 @@ class _MainscreenState extends State<Mainscreen> {
 
   final List<Widget> _screens = [
     HomeScreen(),
-    Paniers(),
+    CartScreen(),
     const Center(child: Text("Profil")),
   ];
 

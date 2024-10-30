@@ -26,7 +26,7 @@ class ApiService {
     }
   }
 
-   Future<String> login(String username, String password) async {
+  Future<String> login(String username, String password) async {
     final url = Uri.parse('$baseUrl/auth/login');
     final response = await http.post(
       url,
@@ -41,9 +41,18 @@ class ApiService {
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      return data['token']; 
+      return data['token'];
     } else {
       throw Exception('Login failed');
+    }
+  }
+
+  Future<List<dynamic>> fetchCart() async {
+    final response = await http.get(Uri.parse('$baseUrl/carts'));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception('Failed to load cart');
     }
   }
 }
