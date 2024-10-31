@@ -11,6 +11,7 @@ import 'package:ecmmerce/models/products.dart';
 import 'package:ecmmerce/screens/login.dart';
 import 'package:ecmmerce/screens/mainscreen.dart';
 import 'package:ecmmerce/screens/productDetail.dart';
+import 'package:ecmmerce/screens/productform.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,11 +49,18 @@ class MyApp extends StatelessWidget {
           path: '/home',
           builder: (context, state) => const Mainscreen(),
         ),
-    GoRoute(
-      path: '/productdetail',
+        GoRoute(
+          path: '/productdetail',
+          builder: (context, state) {
+            final product = state.extra as Product;
+            return Productdetail(product: product);
+          },
+        ),
+            GoRoute(
+      path: '/productForm',
       builder: (context, state) {
-        final product = state.extra as Product;
-        return Productdetail(product: product);
+        final product = state.extra as Product?; // Récupère un produit s'il existe
+        return ProductFormScreen(product: product);
       },
     ),
       ],
@@ -72,6 +80,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => cartBloc..add(LoadCart())),
         BlocProvider(
             create: (_) => ProductBloc(ApiService())..add(LoadProducts())),
+
         BlocProvider(
             create: (_) =>
                 CategoriesBloc(ApiService())..add(FetchCategories())),

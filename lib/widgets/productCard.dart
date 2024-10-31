@@ -24,8 +24,7 @@ class ProductCard extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-                      context.go('/productdetail', extra: product);
-
+              context.go('/productdetail', extra: product);
             },
             child: ClipRRect(
               borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),

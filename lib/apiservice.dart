@@ -55,4 +55,51 @@ class ApiService {
       throw Exception('Failed to load cart');
     }
   }
+
+
+  Future<Product> addProduct(Product product) async {
+    final response = await http.post(
+      Uri.parse(baseUrl),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: json.encode({
+        'title': product.title,
+        'description': product.description,
+        'price': product.price,
+        'image': product.image,
+        'category': product.category,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      final jsonResponse = json.decode(response.body);
+      return Product.fromJson(jsonResponse);
+    } else {
+      throw Exception('Échec de l\'ajout du produit');
+    }
+  }
+
+  Future<Product> updateProduct(Product product) async {
+    final response = await http.put(
+      Uri.parse('$baseUrl/${product.id}'),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: json.encode({
+        'title': product.title,
+        'description': product.description,
+        'price': product.price,
+        'image': product.image,
+        'category': product.category,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      return Product.fromJson(jsonResponse);
+    } else {
+      throw Exception('Échec de la mise à jour du produit');
+    }
+  }
 }
